@@ -1,11 +1,13 @@
 "use client";
 import { DesktopOutlined, PieChartOutlined } from "@ant-design/icons";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
+import { Layout, Menu, theme } from "antd";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const { Header, Content, Footer, Sider } = Layout;
 
 function getItem(label, key, icon) {
+  
   return {
     key,
     icon,
@@ -13,19 +15,8 @@ function getItem(label, key, icon) {
   };
 }
 
-// Simplified handleClick to be used in the Menu onClick
-const handleClick = (e) => {
-  switch (e.key) {
-    case "1":
-      console.log("Products clicked");
-      break;
-    case "2":
-      console.log("Yug clicked");
-      break;
-    default:
-      break;
-  }
-};
+
+
 
 const items = [
   getItem("Products", "1", <PieChartOutlined />),
@@ -34,9 +25,26 @@ const items = [
 
 const Uilayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
+  const router=useRouter();
+
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
+  const handleClick = (e) => {
+    switch (e.key) {
+      case "1":
+        console.log("Products clicked");
+        router.push('/products')
+        break;
+      case "2":
+        console.log("Yug clicked");
+        router.push('/yug')
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <Layout
@@ -58,45 +66,6 @@ const Uilayout = ({ children }) => {
           onClick={handleClick}
         />
       </Sider>
-      <Layout>
-        <Header
-          style={{
-            padding: 0,
-            background: colorBgContainer,
-          }}
-        />
-        <Content
-          style={{
-            margin: "0 16px",
-          }}
-        >
-          <Breadcrumb
-            style={{
-              margin: "16px 0",
-            }}
-          >
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb>
-          <div
-            style={{
-              padding: 24,
-              minHeight: 360,
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG,
-            }}
-          >
-            {children}
-          </div>
-        </Content>
-        <Footer
-          style={{
-            textAlign: "center",
-          }}
-        >
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
-        </Footer>
-      </Layout>
     </Layout>
   );
 };
