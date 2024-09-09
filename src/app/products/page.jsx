@@ -1,28 +1,38 @@
 "use client"
 
-import { Spin, Table } from "antd";
+import { Input, Pagination, Spin, Table } from "antd";
 import { useEffect, useState } from "react";
 
 function Products() {
   const [data,setData]=useState([])
-  const [loading,setloading]=useState([true])
+  const [loading,setLoading]=useState([true])
+  const [searchData,setSearchData]=useState("")
+  const [totalProducts, setTotalProducts] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
 
-  useEffect(()=>{
-    const fetchData=async()=>{
-      try{
-        const response= await fetch("https://dummyjson.com/products");
-        const data= await response.json();
-        console.log("first",data)
-        setData(data.products)
-      }catch(err){
-        console.error("error fetching data:",err);
-      }finally{
-        setloading(false)
-      }
+  
+
+  
+
+  const fetchProducts = async (page) => {
+    const skip = (page - 1) * pageSize;
+    try {
+      const response = await fetch(`https://dummyjson.com/products/search?q=${searchData}&limit=${pageSize}&skip=${skip}`);
+      const data = await response.json();
+      console.log("first", data);
+      setData(data.products);
+      setTotalProducts(data.total|| data.products.length);
+    } catch (err) {
+      console.error("error fetching data:", err);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    fetchData();
-  },[])
+  useEffect(() => {
+    fetchProducts(currentPage, searchData);
+  }, [currentPage, searchData]);
 
   const columns = [
     {
@@ -52,18 +62,37 @@ function Products() {
     },
   ];
 
+  const handleSearch=(e)=>{
+    setSearchData(e.target.value)
+    setCurrentPage(1)
+  }
 
   return (
     <div>
       <h1>Product List</h1>
+      <Input
+        placeholder="Search products"
+        onChange={handleSearch}
+        style={{ marginBottom: 16, width: 300 }}
+      />
       {loading ? (
         <Spin size="large" /> // Show loading spinner while data is being fetched
       ) : (
+        <>
         <Table
           dataSource={data} // Data for the table
           columns={columns} // Column definitions
           rowKey="id" // Ensure unique key for each row (use your data's unique field)
+          pagination={false}
         />
+        <Pagination
+            current={currentPage}
+            pageSize={pageSize}
+            total={totalProducts}
+            onChange={page => setCurrentPage(page)}
+            style={{marginTop:"15px",display:"flex",justifyContent:"right"}}
+          />
+        </>
       )}
     </div>
   )
