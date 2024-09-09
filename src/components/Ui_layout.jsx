@@ -1,6 +1,7 @@
 "use client";
 import { DesktopOutlined, PieChartOutlined } from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -14,18 +15,6 @@ function getItem(label, key, icon) {
 }
 
 // Simplified handleClick to be used in the Menu onClick
-const handleClick = (e) => {
-  switch (e.key) {
-    case "1":
-      console.log("Products clicked");
-      break;
-    case "2":
-      console.log("Yug clicked");
-      break;
-    default:
-      break;
-  }
-};
 
 const items = [
   getItem("Products", "1", <PieChartOutlined />),
@@ -37,6 +26,23 @@ const Uilayout = ({ children }) => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
+  const router = useRouter();
+
+  const handleClick = (e) => {
+    switch (e.key) {
+      case "1":
+        router.push("/products");
+        break;
+      case "2":
+        // console.log("Yug clicked");
+        router.push("/yug");
+
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <Layout
