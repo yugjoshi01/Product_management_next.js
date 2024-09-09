@@ -1,52 +1,62 @@
-"use client"
-import {
-    DesktopOutlined,
-    PieChartOutlined
-} from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import { useState } from 'react';
+"use client";
+import { DesktopOutlined, PieChartOutlined } from "@ant-design/icons";
+import { Breadcrumb, Layout, Menu, theme } from "antd";
+import { useState } from "react";
+
 const { Header, Content, Footer, Sider } = Layout;
-function getItem(label, key, icon, children, onClick) {
+
+function getItem(label, key, icon) {
   return {
     key,
     icon,
-    children,
     label,
-    onClick, 
   };
 }
 
-const handleClick = (menuItemKey) => {
-    switch (menuItemKey) {
-      case "1":
-        console.log("Products clicked");
-        break;
-      case "2":
-        console.log("Yug clicked");
-        break;
-      default:
-        break;
-    }
-  };
-const items = [
-  getItem('Products', '1', <PieChartOutlined />,() => handleClick("1")),
-  getItem('yug', '2', <DesktopOutlined />,() => handleClick("2")),
+// Simplified handleClick to be used in the Menu onClick
+const handleClick = (e) => {
+  switch (e.key) {
+    case "1":
+      console.log("Products clicked");
+      break;
+    case "2":
+      console.log("Yug clicked");
+      break;
+    default:
+      break;
+  }
+};
 
+const items = [
+  getItem("Products", "1", <PieChartOutlined />),
+  getItem("Yug", "2", <DesktopOutlined />),
 ];
-const Uilayout = ({children}) => {
+
+const Uilayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
   return (
     <Layout
       style={{
-        minHeight: '100vh',
+        minHeight: "100vh",
       }}
     >
-      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+      <Sider
+        collapsible
+        collapsed={collapsed}
+        onCollapse={(value) => setCollapsed(value)}
+      >
         <div className="demo-logo-vertical" />
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items}/>
+        <Menu
+          theme="dark"
+          defaultSelectedKeys={["1"]}
+          mode="inline"
+          items={items}
+          onClick={handleClick}
+        />
       </Sider>
       <Layout>
         <Header
@@ -57,12 +67,12 @@ const Uilayout = ({children}) => {
         />
         <Content
           style={{
-            margin: '0 16px',
+            margin: "0 16px",
           }}
         >
           <Breadcrumb
             style={{
-              margin: '16px 0',
+              margin: "16px 0",
             }}
           >
             <Breadcrumb.Item>User</Breadcrumb.Item>
@@ -76,12 +86,12 @@ const Uilayout = ({children}) => {
               borderRadius: borderRadiusLG,
             }}
           >
-           {children}
+            {children}
           </div>
         </Content>
         <Footer
           style={{
-            textAlign: 'center',
+            textAlign: "center",
           }}
         >
           Ant Design ©{new Date().getFullYear()} Created by Ant UED
@@ -90,4 +100,5 @@ const Uilayout = ({children}) => {
     </Layout>
   );
 };
+
 export default Uilayout;
