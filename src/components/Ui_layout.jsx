@@ -1,6 +1,6 @@
 "use client";
 import { store } from "@/store/store";
-import { PieChartOutlined, RetweetOutlined, ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
+import { FileImageOutlined, PieChartOutlined, RetweetOutlined, ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -24,6 +24,7 @@ const items = [
   getItem("User", "2", <UserOutlined />),
   getItem("redux", "3", <RetweetOutlined />),
   getItem("cart", "4", <ShoppingCartOutlined />),
+  getItem("Product-image", "5", <FileImageOutlined />),
 ];
 
 const Uilayout = ({ children }) => {
@@ -51,6 +52,10 @@ const Uilayout = ({ children }) => {
         case "4":
           console.log("cart clicked");
           Router.push('/cart')
+          break;
+          case "5":
+          console.log("image clicked");
+          Router.push('/images')
           break;
       default:
         break;
