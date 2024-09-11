@@ -36,6 +36,7 @@ function Cart() {
     <div style={{ display: "flex", flexWrap: "wrap", gap: "40px",margin:"25px 40px"}}>
     {data && data.map((product)=>(
         <Card
+        key={product.id}
       hoverable
       style={{
         width: 240,
@@ -47,7 +48,9 @@ function Cart() {
         />
       }
       actions={[
-        <Button type="primary" ghost onClick={() => handleAddToCart(product)}>
+        <Button 
+        key={`add-to-cart-${product.id}`}
+        type="primary" ghost onClick={() => handleAddToCart(product)}>
     {cartItems.find((item) => item.id === product.id) ? "Added" : "Add to Cart"}
     </Button>
       ]}
