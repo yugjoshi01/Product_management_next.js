@@ -2,6 +2,7 @@ import Uilayout from '@/components/Ui_layout';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import localFont from "next/font/local";
 
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",

@@ -1,8 +1,10 @@
 "use client";
-import { DesktopOutlined, PieChartOutlined } from "@ant-design/icons";
+import { store } from "@/store/store";
+import { PieChartOutlined, RetweetOutlined, ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Provider } from 'react-redux';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -19,7 +21,9 @@ function getItem(label, key, icon) {
 
 const items = [
   getItem("Products", "1", <PieChartOutlined />),
-  getItem("Yug", "2", <DesktopOutlined />),
+  getItem("User", "2", <UserOutlined />),
+  getItem("redux", "3", <RetweetOutlined />),
+  getItem("cart", "4", <ShoppingCartOutlined />),
 ];
 
 const Uilayout = ({ children }) => {
@@ -37,15 +41,24 @@ const Uilayout = ({ children }) => {
         Router.push('/products')
         break;
       case "2":
-        console.log("Yug clicked");
-        Router.push('/yug')
+        console.log("user clicked");
+        Router.push('/user')
         break;
+        case "3":
+        console.log("redux clicked");
+        Router.push('/redux')
+        break;
+        case "4":
+          console.log("cart clicked");
+          Router.push('/cart')
+          break;
       default:
         break;
     }
   };
 
   return (
+    <Provider store={store}>
     <Layout
       style={{
         minHeight: "100vh",
@@ -105,6 +118,7 @@ const Uilayout = ({ children }) => {
         </Footer>
       </Layout>
     </Layout>
+    </Provider>
   );
 };
 
