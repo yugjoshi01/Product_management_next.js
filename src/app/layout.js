@@ -1,5 +1,5 @@
-import Uilayout from '@/components/Ui_layout';
-import { AntdRegistry } from '@ant-design/nextjs-registry';
+
+import Provider from "@/components/provider";
 import localFont from "next/font/local";
 
 
@@ -14,15 +14,16 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
+
+
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-      <AntdRegistry>
-       <Uilayout>
+      <Provider>
         {children}
-       </Uilayout>
-        </AntdRegistry>
+      </Provider>
       </body>
     </html>
   );

@@ -25,6 +25,7 @@ const items = [
   getItem("redux", "3", <RetweetOutlined />),
   getItem("cart", "4", <ShoppingCartOutlined />),
   getItem("Product-image", "5", <FileImageOutlined />),
+  getItem("Query", "6",  <PieChartOutlined />),
 ];
 
 const Uilayout = ({ children }) => {
@@ -56,6 +57,10 @@ const Uilayout = ({ children }) => {
           case "5":
           console.log("image clicked");
           Router.push('/images')
+          break;
+          case "6":
+          console.log("image clicked");
+          Router.push('/query')
           break;
       default:
         break;
